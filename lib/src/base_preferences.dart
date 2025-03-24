@@ -28,15 +28,15 @@ class BasePreferences {
   }
 
   static Future<void> init() async {
-    _prefs = await SharedPreferences.getInstance();
+    sharedPreferences = await SharedPreferences.getInstance();
   }
 
   static Future<void> setToken(String token) async {
-    await _prefs?.setString('token', token);
+    await sharedPreferences?.setString('token', token);
   }
 
   static String? getToken() {
-    return _prefs?.getString('token');
+    return sharedPreferences?.getString('token');
   }
 
   static Future<void> clear() async {
