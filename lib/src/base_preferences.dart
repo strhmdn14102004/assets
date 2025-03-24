@@ -25,6 +25,20 @@ class BasePreferences {
 
   int? getInt(String key, [int? defValue]) {
     return sharedPreferences.getInt(key) ?? defValue;
+  }  static Future<void> init() async {
+    _prefs = await SharedPreferences.getInstance();
+  }
+
+  static Future<void> setToken(String token) async {
+    await _prefs?.setString('token', token);
+  }
+
+  static String? getToken() {
+    return _prefs?.getString('token');
+  }
+
+  static Future<void> clear() async {
+    await _prefs?.clear();
   }
 
   double? getDouble(
