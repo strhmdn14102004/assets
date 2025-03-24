@@ -25,7 +25,9 @@ class BasePreferences {
 
   int? getInt(String key, [int? defValue]) {
     return sharedPreferences.getInt(key) ?? defValue;
-  }  static Future<void> init() async {
+  }
+
+  static Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
   }
 
