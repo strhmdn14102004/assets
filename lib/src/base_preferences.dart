@@ -40,7 +40,7 @@ class BasePreferences {
   }
 
   static Future<void> clear() async {
-    await _prefs?.clear();
+    await sharedPreferences?.clear();
   }
 
   double? getDouble(
