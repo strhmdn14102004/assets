@@ -19,6 +19,7 @@ class BaseNumericField extends StatefulWidget {
   TextAlign textAlign;
   FormFieldSetter<num>? onSaved;
   ValueChanged<String>? onChanged;
+  FormFieldValidator<num>? validator;
 
   BaseNumericField({
     super.key,
@@ -35,6 +36,7 @@ class BaseNumericField extends StatefulWidget {
     this.textAlign = TextAlign.end,
     this.onSaved,
     this.onChanged,
+    this.validator,
   });
 
   @override
@@ -52,7 +54,7 @@ class BaseNumericFieldState extends State<BaseNumericField> {
     return FormField<num>(
       initialValue: tryParse(widget.controller.text),
       enabled: !widget.readonly,
-      validator: (num? value) {
+      validator: widget.validator ?? (num? value) {
         if (widget.mandatory) {
           if (value == null) {
             return "this_field_is_required".tr();
@@ -69,13 +71,13 @@ class BaseNumericFieldState extends State<BaseNumericField> {
             labelWidget(),
             Container(
               width: double.infinity,
+              height: Dimensions.size55,
               decoration: ShapeDecoration(
                 shape: SmoothRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                   smoothness: 1,
                   side: BorderSide(
                       color: borderColor(field),
-                      width: 1.5
                   ),
                 ),
                 color: AppColors.surfaceContainerLowest(),
@@ -96,11 +98,14 @@ class BaseNumericFieldState extends State<BaseNumericField> {
                     formatter: NumberFormat.decimalPattern("id_ID"),
                   ),
                 ],
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
-                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
-                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
-                  errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
+                  enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
+                  focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
+                  errorBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
+                  prefixIcon: widget.prefixIcon,
+                  suffix: widget.suffix,
+                  suffixIcon: widget.suffixIcon,
                 ),
                 onChanged: widget.onChanged ?? (value) {
                   setState(() {
