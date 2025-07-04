@@ -31,11 +31,11 @@ class Locations {
     Position? position;
 
     try {
-      position = await Geolocator.getCurrentPosition(
-        locationSettings: const LocationSettings(
-          timeLimit: Duration(seconds: 5),
-        ),
-      );
+    position = await Geolocator.getCurrentPosition(
+  desiredAccuracy: LocationAccuracy.high,
+  timeLimit: const Duration(seconds: 5),
+);
+
     } catch (e) {
       position = await Geolocator.getLastKnownPosition();
     }
